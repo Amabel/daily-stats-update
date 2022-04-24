@@ -1,0 +1,19 @@
+{
+  "name": "wakatime-stats-update",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "sls deploy --stage dev",
+    "deploy:prod": "sls deploy --stage prod"
+  },
+  "main": "index.js",
+  "author": "Amabel <luoweibinb@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-webpack": "^5.7.0",
+    "webpack": "^5.72.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1120.0",
+    "axios": "^0.26.1"
+  }
+}

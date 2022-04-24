@@ -1,0 +1,39 @@
+service: wakatime-stats-update
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+useDotenv: true
+
+provider:
+  name: aws
+  region: ${env:REGION}
+  profile: ${env:PROFILE_NAME}
+  deploymentBucket:
+    name: ${env:SERVERLESS_BUCKET_NAME}
+  lambdaHashingVersion: 20201221
+  timeout: 30
+  iamRoleStatements:         # S3にファイル作成するのに必要な権限
+    - Effect: Allow
+      Action:
+        - 's3:PutObject'
+      Resource:
+        - 'arn:aws:s3:::${self:custom.S3_BUCKET_NAME}/*'
+  environment:
+    S3_BUCKET_NAME: ${self:custom.S3_BUCKET_NAME}
+    WAKATIME_API_KEY: ${self:custom.WAKATIME_API_KEY}
+
+custom:
+  S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
+  WAKATIME_API_KEY: ${env:WAKATIME_API_KEY}
+
+functions:
+  update:
+    handler: src/update.handler
+    events:
+      - schedule: cron(0 20 ? * * *)
