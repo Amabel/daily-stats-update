@@ -2,7 +2,6 @@
   "name": "wakatime-stats-update",
   "version": "1.0.0",
   "scripts": {
-    "deploy": "sls deploy --stage dev",
     "deploy:prod": "sls deploy --stage prod"
   },
   "main": "index.js",

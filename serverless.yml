@@ -27,13 +27,19 @@ provider:
   environment:
     S3_BUCKET_NAME: ${self:custom.S3_BUCKET_NAME}
     WAKATIME_API_KEY: ${self:custom.WAKATIME_API_KEY}
+    GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
 
 custom:
   S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
   WAKATIME_API_KEY: ${env:WAKATIME_API_KEY}
+  GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
 
 functions:
   update:
     handler: src/update.handler
     events:
       - schedule: cron(0 20 ? * * *)
+  update-github-stats:
+    handler: src/github-stats.handler
+    events:
+      - schedule: rate(1 minute)
