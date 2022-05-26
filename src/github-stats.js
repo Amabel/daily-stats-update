@@ -2,6 +2,7 @@
 
 const S3 = require('aws-sdk/clients/s3')
 const fetchStats = require('./fetchers/github-stats-fetcher')
+const slackApi = require('./utils/slack-api')
 const S3_BUCKET = process.env.S3_BUCKET_NAME
 
 module.exports.handler = async (event) => {
@@ -15,12 +16,13 @@ module.exports.handler = async (event) => {
     },
   })
 
-  await upload.promise().then((data, err) => {
+  await upload.promise().then((res, err) => {
     if (err) {
       return console.log(err)
     }
 
-    return console.log(data)
+    slackApi.sendGithubStatsToSlack(data)
+    return console.log(res)
   })
 }
 
