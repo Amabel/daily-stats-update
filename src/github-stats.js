@@ -8,6 +8,19 @@ const S3_BUCKET = process.env.S3_BUCKET_NAME
 module.exports.handler = async (event) => {
   const data = await fetchGithubStats()
 
+  await uploadToS3(data)
+  await slackApi.sendGithubStatsToSlack(data)
+
+  return
+}
+
+async function fetchGithubStats(username = 'Amabel') {
+  const stats = await fetchStats(username)
+
+  return stats
+}
+
+async function uploadToS3(data) {
   const upload = new S3.ManagedUpload({
     params: {
       Bucket: S3_BUCKET,
@@ -16,18 +29,10 @@ module.exports.handler = async (event) => {
     },
   })
 
-  await upload.promise().then((res, err) => {
+  await upload.promise().then(async (res, err) => {
     if (err) {
       return console.log(err)
     }
-
-    slackApi.sendGithubStatsToSlack(data)
     return console.log(res)
   })
-}
-
-async function fetchGithubStats(username = 'Amabel') {
-  const stats = await fetchStats(username)
-
-  return stats
 }
