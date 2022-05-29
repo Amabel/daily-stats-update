@@ -18,8 +18,10 @@ module.exports.handler = async (event) => {
 
   if (data.total_seconds_including_other_language) {
     await uploadToS3(data)
+    const totalSeconds = data.total_seconds_including_other_language
+    const hrs = (totalSeconds / 3600).toFixed(2)
     await slackApi.sendWakatimeStatsToSlack(
-      `Wakatime stats updated, total seconds: ${data.total_seconds_including_other_language}`,
+      `Wakatime stats updated, total seconds: ${data.total_seconds_including_other_language} （${hrs} hours）`,
     )
   } else {
     await slackApi.sendWakatimeStatsToSlack(
