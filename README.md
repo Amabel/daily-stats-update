@@ -1,6 +1,6 @@
-# Wakatime Stats Update
+# Daily Stats Update
 
-Scheduled job that fetches stats from wakatime and store on S3.
+定时获取GitHub和Wakatime的数据，并上传至S3。
 
 # Deploy
 
