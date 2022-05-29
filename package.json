@@ -1,5 +1,5 @@
 {
-  "name": "wakatime-stats-update",
+  "name": "daily-stats-update",
   "version": "1.0.0",
   "scripts": {
     "deploy:prod": "sls deploy --stage prod"

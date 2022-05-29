@@ -1,4 +1,4 @@
-service: wakatime-stats-update
+service: daily-stats-update
 
 frameworkVersion: '3'
 
@@ -36,8 +36,8 @@ custom:
   GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
 
 functions:
-  update:
-    handler: src/update.handler
+  update-wakatime-stats:
+    handler: src/wakatime-stats.handler
     timeout: 90
     events:
       - schedule: cron(0 20 ? * * *)
